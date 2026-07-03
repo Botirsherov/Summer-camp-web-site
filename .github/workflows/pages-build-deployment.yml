@@ -3,7 +3,7 @@ name: pages-build-deployment
 on:
   push:
     branches:
-      - main    # change if your default branch is not 'main'
+      - main
   workflow_dispatch:
 
 permissions:
@@ -21,35 +21,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js (optional)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies (skip if static)
-        run: npm ci
-        working-directory: .
-
-      - name: Build site (skip or adjust if static)
-        run: npm run build
-        working-directory: .
-
-      - name: Show build output (debug)
-        run: |
-          echo "Working dir: $(pwd)"
-          echo "Listing repo root:"
-          ls -la
-          echo "Listing build output (adjust path above if needed):"
-          ls -la ./dist || ls -la ./build || ls -la ./public || true
-          echo "Top of index.html (if present):"
-          if [ -f ./dist/index.html ]; then head -n 20 ./dist/index.html; fi
-          if [ -f ./build/index.html ]; then head -n 20 ./build/index.html; fi
-          if [ -f ./public/index.html ]; then head -n 20 ./public/index.html; fi
-
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist   # <-- CHANGE this to ., ./dist, ./build, or ./public depending on where your index.html lives
+          path: .
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v3

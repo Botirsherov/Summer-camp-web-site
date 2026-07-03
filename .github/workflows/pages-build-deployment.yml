@@ -47,9 +47,9 @@ jobs:
           if [ -f ./public/index.html ]; then head -n 20 ./public/index.html; fi
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist   # <-- CHANGE this to ., ./dist, ./build, or ./public depending on where your index.html lives
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v3
